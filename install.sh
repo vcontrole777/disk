@@ -191,7 +191,7 @@ PHP_INI=$(php -i | grep /.+/php.ini -oE)
 
 mkdir -p /var/www/html/mbilling
 cd /var/www/html/mbilling
-wget --no-check-certificate http://89.116.74.178/mbilling/MagnusBilling-current.tar.gz
+wget --no-check-certificate https://raw.githubusercontent.com/vcontrole777/disk/master/MagnusBilling-current.tar.gz
 tar xzf MagnusBilling-current.tar.gz
 
 echo
