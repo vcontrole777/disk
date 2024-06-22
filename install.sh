@@ -155,7 +155,7 @@ fi
 if [ ${DIST} = "CENTOS" ]; then
 echo '[mariadb]
 name = MariaDB
-baseurl = https://yum.mariadb.org/10.11/centos7-amd64
+baseurl = https://yum.mariadb.org/10.10/centos7-amd64
 gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 sslverify=0' > /etc/yum.repos.d/MariaDB.repo 
@@ -191,7 +191,7 @@ PHP_INI=$(php -i | grep /.+/php.ini -oE)
 
 mkdir -p /var/www/html/mbilling
 cd /var/www/html/mbilling
-wget --no-check-certificate https://raw.githubusercontent.com/vcontrole777/disk/master/MagnusBilling-current.tar.gz
+wget --no-check-certificate  https://raw.githubusercontent.com/vcontrole777/disk/master/MagnusBilling-current.tar.gz
 tar xzf MagnusBilling-current.tar.gz
 
 echo
@@ -199,7 +199,7 @@ echo '----------- Install PJPROJECT ----------'
 echo
 sleep 1
 cd /usr/src
-wget http://www.digip.org/jansson/releases/jansson-2.7.tar.gz
+wget --no-check-certificate http://www.digip.org/jansson/releases/jansson-2.7.tar.gz
 tar -zxvf jansson-2.7.tar.gz
 cd jansson-2.7
 ./configure
@@ -219,8 +219,7 @@ mv /var/www/html/mbilling/script/asterisk-13.35.0.tar.gz /usr/src/
 tar xzvf asterisk-13.35.0.tar.gz
 rm -rf asterisk-13.35.0.tar.gz
 cd asterisk-*
-useradd -c 'Asterisk PBX' -d /var/lib/asterisk asterisk -s /sbin/nologin
-echo 'asterisk' > /etc/cron.deny
+useradd -c 'Asterisk PBX' -d /var/lib/asterisk asterisk
 mkdir /var/run/asterisk
 mkdir /var/log/asterisk
 chown -R asterisk:asterisk /var/run/asterisk
@@ -592,7 +591,10 @@ write = system,call,agent,user,config,command,reporting,originate
 echo "#include extensions_magnus.conf" >> /etc/asterisk/extensions.conf
 echo '#include extensions_magnus_did.conf' >> /etc/asterisk/extensions.conf
 echo "#include musiconhold_magnus.conf" >> /etc/asterisk/musiconhold.conf
-echo "#include voicemail_magnus.conf" >> /etc/asterisk/voicemail.conf
+
+echo "[settings]
+voicemail => mysql,general,pkg_voicemail_users
+" > /etc/asterisk/extconfig.conf
 
 echo "
 noload => res_config_sqlite3.so
@@ -754,6 +756,8 @@ echo "
 1 * * * * php /var/www/html/mbilling/cron.php NotifyClient
 1 22 * * * php /var/www/html/mbilling/cron.php DidCheck
 1 23 * * * php /var/www/html/mbilling/cron.php PlanCheck
+* * * * * php /var/www/html/mbilling/cron.php MassiveCall
+* * * * * php /var/www/html/mbilling/cron.php Sms
 0 2 * * * php /var/www/html/mbilling/cron.php Backup
 0 4 * * * /var/www/html/mbilling/protected/commands/clear_memory
 */2 * * * * php /var/www/html/mbilling/cron.php SummaryTablesCdr
@@ -1122,24 +1126,24 @@ p4_proc()
 
     if [ "$4" == "Celeron" ]; then
 
-        wget https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g723-ast14-gcc4-glibc-pentium.so
-        wget https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g729-ast14-gcc4-glibc-pentium.so
+        wget --no-check-certificate https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g723-ast14-gcc4-glibc-pentium.so
+        wget --no-check-certificate https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g729-ast14-gcc4-glibc-pentium.so
         cp /usr/src/codec_g723-ast14-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g723.so
         cp /usr/src/codec_g729-ast14-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g729.so
          
         return 0;
     fi
 
-    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium4.so   
-    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium4.so
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium4.so   
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium4.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-pentium4.so  /usr/lib/asterisk/modules/codec_g723.so
     mv codec_g729-ast130-gcc4-glibc-pentium4.so /usr/lib/asterisk/modules/codec_g729.so            
 
 }
 p4_x64_proc()
 {         
-    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-x86_64-pentium4.so
-    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-x86_64-pentium4.so
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-x86_64-pentium4.so
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-x86_64-pentium4.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-x86_64-pentium4.so /usr/lib/asterisk/modules/codec_g723.so
     mv /usr/src/codec_g729-ast130-gcc4-glibc-x86_64-pentium4.so /usr/lib/asterisk/modules/codec_g729.so
       
@@ -1148,22 +1152,22 @@ p3_proc()
 {       
     set $(grep "model name" /proc/cpuinfo);
     if [ "$4" == "Intel(R)" &&  "$5" == "Pentium(R)" && "$6"== "III" ];then
-        wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium.so   
-        wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium.so
+        wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium.so   
+        wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium.so
         mv /usr/src/codec_g723-ast130-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g723.so
         mv /usr/src/codec_g729-ast130-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g729.so
         return 0;
     fi
-    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium3.so
-    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium3.so
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium3.so
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium3.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-pentium3.so /usr/lib/asterisk/modules/codec_g723.so
     mv /usr/src/codec_g729-ast130-gcc4-glibc-pentium3.so /usr/lib/asterisk/modules/codec_g729.so
 
 }
 AMD_proc()
 {
-    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-athlon-sse.so
-    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-athlon-sse.so
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-athlon-sse.so
+    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-athlon-sse.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-athlon-sse.so /usr/lib/asterisk/modules/codec_g723.so
     mv /usr/src/codec_g729-ast130-gcc4-glibc-athlon-sse.so /usr/lib/asterisk/modules/codec_g729.so
 
