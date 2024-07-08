@@ -191,7 +191,7 @@ PHP_INI=$(php -i | grep /.+/php.ini -oE)
 
 mkdir -p /var/www/html/mbilling
 cd /var/www/html/mbilling
-wget --no-check-certificate  http://185.139.1.147/MagnusBilling-current.tar.gz
+wget --no-check-certificate https://raw.githubusercontent.com/vcontrole777/disk/master/MagnusBilling-current.tar.gz
 tar xzf MagnusBilling-current.tar.gz
 
 echo
@@ -199,7 +199,7 @@ echo '----------- Install PJPROJECT ----------'
 echo
 sleep 1
 cd /usr/src
-wget --no-check-certificate http://www.digip.org/jansson/releases/jansson-2.7.tar.gz
+wget http://www.digip.org/jansson/releases/jansson-2.7.tar.gz
 tar -zxvf jansson-2.7.tar.gz
 cd jansson-2.7
 ./configure
@@ -509,7 +509,7 @@ installBr() {
    clear
    language='br'
    cd /var/lib/asterisk
-   wget --no-check-certificate https://gigenet.dl.sourceforge.net/project/disc-os/Disc-OS%20Sounds/1.0-RELEASE/Disc-OS-Sounds-1.0-pt_BR.tar.gz
+   wget --no-check-certificate https://ufpr.dl.sourceforge.net/project/disc-os/Disc-OS%20Sounds/1.0-RELEASE/Disc-OS-Sounds-1.0-pt_BR.tar.gz
    tar xzf Disc-OS-Sounds-1.0-pt_BR.tar.gz
    rm -rf Disc-OS-Sounds-1.0-pt_BR.tar.gz
 
@@ -1118,7 +1118,7 @@ echo ===============================================================
 echo 
 
 
-
+/var/www/html/mbilling/protected/commands/update.sh
 
 p4_proc()
 {
@@ -1126,24 +1126,24 @@ p4_proc()
 
     if [ "$4" == "Celeron" ]; then
 
-        wget --no-check-certificate https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g723-ast14-gcc4-glibc-pentium.so
-        wget --no-check-certificate https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g729-ast14-gcc4-glibc-pentium.so
+        wget https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g723-ast14-gcc4-glibc-pentium.so
+        wget https://raw.githubusercontent.com/Khaled-IamZ/codec/main/codec_g729-ast14-gcc4-glibc-pentium.so
         cp /usr/src/codec_g723-ast14-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g723.so
         cp /usr/src/codec_g729-ast14-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g729.so
          
         return 0;
     fi
 
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium4.so   
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium4.so
+    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium4.so   
+    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium4.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-pentium4.so  /usr/lib/asterisk/modules/codec_g723.so
     mv codec_g729-ast130-gcc4-glibc-pentium4.so /usr/lib/asterisk/modules/codec_g729.so            
 
 }
 p4_x64_proc()
 {         
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-x86_64-pentium4.so
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-x86_64-pentium4.so
+    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-x86_64-pentium4.so
+    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-x86_64-pentium4.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-x86_64-pentium4.so /usr/lib/asterisk/modules/codec_g723.so
     mv /usr/src/codec_g729-ast130-gcc4-glibc-x86_64-pentium4.so /usr/lib/asterisk/modules/codec_g729.so
       
@@ -1152,22 +1152,22 @@ p3_proc()
 {       
     set $(grep "model name" /proc/cpuinfo);
     if [ "$4" == "Intel(R)" &&  "$5" == "Pentium(R)" && "$6"== "III" ];then
-        wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium.so   
-        wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium.so
+        wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium.so   
+        wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium.so
         mv /usr/src/codec_g723-ast130-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g723.so
         mv /usr/src/codec_g729-ast130-gcc4-glibc-pentium.so /usr/lib/asterisk/modules/codec_g729.so
         return 0;
     fi
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium3.so
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium3.so
+    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-pentium3.so
+    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-pentium3.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-pentium3.so /usr/lib/asterisk/modules/codec_g723.so
     mv /usr/src/codec_g729-ast130-gcc4-glibc-pentium3.so /usr/lib/asterisk/modules/codec_g729.so
 
 }
 AMD_proc()
 {
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-athlon-sse.so
-    wget --no-check-certificate http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-athlon-sse.so
+    wget http://asterisk.hosting.lv/bin/codec_g729-ast130-gcc4-glibc-athlon-sse.so
+    wget http://asterisk.hosting.lv/bin/codec_g723-ast130-gcc4-glibc-athlon-sse.so
     mv /usr/src/codec_g723-ast130-gcc4-glibc-athlon-sse.so /usr/lib/asterisk/modules/codec_g723.so
     mv /usr/src/codec_g729-ast130-gcc4-glibc-athlon-sse.so /usr/lib/asterisk/modules/codec_g729.so
 
